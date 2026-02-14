@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person</title>
+    <style>
+        body {
+            margin: 0; padding: 0; display: flex; justify-content: center;
+            align-items: center; height: 100vh; background-color: #ffebee;
+            font-family: 'Arial', sans-serif; overflow: hidden; text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9); padding: 40px;
+            border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10; width: 85%; max-width: 400px;
+        }
+        h1 { color: #d32f2f; font-size: 1.8rem; }
+        .heart { font-size: 60px; animation: pulse 1s infinite alternate; }
+        @keyframes pulse { to { transform: scale(1.1); } }
+        
+        .btn-container {
+            margin-top: 30px; display: flex; justify-content: center;
+            align-items: center; gap: 20px; flex-wrap: wrap;
+        }
+        #yesBtn {
+            background-color: #4caf50; color: white; border: none;
+            padding: 15px 30px; font-size: 1.2rem; border-radius: 50px;
+            cursor: pointer; transition: 0.3s;
+        }
+        #noBtn {
+            background-color: #f44336; color: white; border: none;
+            padding: 15px 30px; font-size: 1.2rem; border-radius: 50px;
+            position: relative; transition: 0.1s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="heart">💝</div>
+        <h1>Will you be my Valentine?</h1>
+        <p>There's only one right answer... 😉</p>
+        
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">YES</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let yesSize = 1.2;
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            
+            // Make the No button jump to a random spot
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            // Make the Yes button bigger and more tempting
+            yesSize += 0.2;
+            yesBtn.style.transform = `scale(${yesSize})`;
+        }
+
+        function celebrate() {
+            document.querySelector('.container').innerHTML = `
+                <div class="heart">💖</div>
+                <h1>I KNEW IT! ❤️</h1>
+                <p>You've made me the luckiest person alive. See you soon, Valentine!</p>
+            `;
+            // Add extra floating hearts
+            setInterval(createHeart, 100);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'absolute';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.transition = '5s';
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.style.top = '-10vh';
+                heart.style.transform = 'rotate(360deg)';
+            }, 100);
+            setTimeout(() => heart.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
